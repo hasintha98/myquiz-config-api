@@ -8,5 +8,10 @@ import {
   export class UserController {
     constructor() {}
   
+    @Get('/check')
+    registerUser() {
+      return "trues"
+    }
+
   }
   
