@@ -30,6 +30,14 @@ export class IntegrationController {
   @Post('/user/external')
   UserFromExternal(@Body() body: any) {
     this.logger.log(`EXTERNAL USER| ${JSON.stringify(body)}`, AppService.name);
+
+    if(body.message.toLowerCase() == 'reg mquiz') {
+      this.integrationService.registerUser(body);
+    } else if(body.message.toLowerCase() == 'unreg mquiz') {
+      this.integrationService.unregisterUser(body);
+    } else {
+      this.integrationService.answerVerification(body);
+    }
     return body;
   }
 }

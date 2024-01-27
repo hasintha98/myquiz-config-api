@@ -3,12 +3,10 @@ import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 export class RegiterUserRequestDTO {
 
     @IsString()
-    @IsNotEmpty()
     mobile: string;
 
-    @IsOptional()
-    @IsNotEmpty()
-    ref: string;
+    @IsString()
+    senderMask: string;
 
     @IsOptional()
     @IsNotEmpty()

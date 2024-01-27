@@ -3,11 +3,15 @@ import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 export class RegiterUserRequestDTO {
 
     @IsString()
-    @IsNotEmpty()
     mobile: string;
 
+    @IsString()
+    senderMask: string;
+
     @IsOptional()
-    serverRef: string;
+    shortCode: Number;
+
+    
 
 }
 

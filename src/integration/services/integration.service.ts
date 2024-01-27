@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { RegiterUserRequestDTO } from '../dto/RegisterUser.request.dto';
 import {
   MSPACE_APPID,
+  MSPACE_APPKEY,
   MSPACE_OTP_URL,
   MSPACE_SMS_CLIENT_ID,
   MSPACE_SMS_URL,
@@ -28,39 +29,39 @@ export class IntegrationService {
 
   async registerUser(userDetails: RegiterUserRequestDTO) {
     try {
-      const response = await axios(MSPACE_OTP_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        data: {
-          applicationId: MSPACE_APPID,
-          password: 'eea1ebf64d8eca14380a0da39aba9f8b',
-          subscriberId: `tel:${mobileGeneratorWithOutPlus(userDetails.mobile)}`,
-          applicationHash: generateStringHash(10),
-          applicationMetaData: {
-            client: 'MOBILEAPP',
-            device: 'Samsung S8',
-            os: 'Windows 10',
-            appCode: 'https://mycricq.com',
-          },
-        },
-      });
+      // const response = await axios(MSPACE_OTP_URL, {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //     Accept: 'application/json',
+      //   },
+      //   data: {
+      //     applicationId: MSPACE_APPID,
+      //     password: 'eea1ebf64d8eca14380a0da39aba9f8b',
+      //     subscriberId: `tel:${mobileGeneratorWithOutPlus(userDetails.mobile)}`,
+      //     applicationHash: generateStringHash(10),
+      //     applicationMetaData: {
+      //       client: 'MOBILEAPP',
+      //       device: 'Samsung S8',
+      //       os: 'Windows 10',
+      //       appCode: 'https://mycricq.com',
+      //     },
+      //   },
+      // });
 
-      const creatUser = {
+      const createUser = {
+        senderMask: userDetails.senderMask,
         mobile: userDetails.mobile,
         serviceProvider: 'mobitel',
         cycle: 0,
-        ref: userDetails.serverRef,
       };
 
-      await this.userService.createUser(creatUser);
+      const response = await this.userService.createUser(createUser);
 
       await this.sendQuestion({ mobile: userDetails.mobile });
 
       this.logger.log(
-        `REGISTERED|${userDetails.mobile}|` + JSON.stringify(response?.data),
+        `REGISTERED|${userDetails.senderMask}|` + JSON.stringify(response),
         AppService.name,
       );
       return response;
@@ -99,11 +100,9 @@ export class IntegrationService {
 
           `,
           characterEncoding: 'ascii',
-          appID: '',
-          appKey: '',
-          recipientMask: `tel:${mobileGeneratorWithOutPlus(
-            user.attributes.mobile,
-          )}`,
+          appID: MSPACE_APPID,
+          appKey: MSPACE_APPKEY,
+          recipientMask: user.attributes.senderMask,
         },
       });
 
@@ -122,32 +121,32 @@ export class IntegrationService {
 
   async unregisterUser(userDetails: MobileDTO) {
     try {
-      const response = await axios(MSPACE_OTP_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        data: {
-          applicationId: MSPACE_APPID,
-          password: 'eea1ebf64d8eca14380a0da39aba9f8b',
-          subscriberId: `tel:${mobileGeneratorWithOutPlus(userDetails.mobile)}`,
-          applicationHash: generateStringHash(10),
-          applicationMetaData: {
-            client: 'MOBILEAPP',
-            device: 'Samsung S8',
-            os: 'Windows 10',
-            appCode: 'https://mycricq.com',
-          },
-        },
-      });
+      // const response = await axios(MSPACE_OTP_URL, {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //     Accept: 'application/json',
+      //   },
+      //   data: {
+      //     applicationId: MSPACE_APPID,
+      //     password: 'eea1ebf64d8eca14380a0da39aba9f8b',
+      //     subscriberId: `tel:${mobileGeneratorWithOutPlus(userDetails.mobile)}`,
+      //     applicationHash: generateStringHash(10),
+      //     applicationMetaData: {
+      //       client: 'MOBILEAPP',
+      //       device: 'Samsung S8',
+      //       os: 'Windows 10',
+      //       appCode: 'https://mycricq.com',
+      //     },
+      //   },
+      // });
 
-      this.userService.removeUser(userDetails);
+      await this.userService.removeUser(userDetails);
       this.logger.log(
-        `REGISTERED|${userDetails.mobile}|` + JSON.stringify(response?.data),
+        `UNREGISTERED|${userDetails.mobile}|` + JSON.stringify(userDetails?.senderMask),
         AppService.name,
       );
-      return response;
+      return userDetails;
     } catch (err) {
       this.logger.error(
         'ERROR REGISTER|' + JSON.stringify(err?.response),

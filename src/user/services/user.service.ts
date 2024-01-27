@@ -66,7 +66,7 @@ export class UserService {
 
   async removeUser(data: MobileDTO) {
     try {
-      await axios(USER_URL + `?filters[mobile][$eq]=${data.mobile}`, {
+      await axios(USER_URL + `?filters[senderMask][$eq]=${data.senderMask}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -75,7 +75,7 @@ export class UserService {
         data,
       });
 
-      this.logger.log('DELETED USER|' + data.mobile, AppService.name);
+      this.logger.log('DELETED USER|' + data.senderMask, AppService.name);
     } catch (e) {
       this.logger.error(
         'ERROR DELETE USER|' + JSON.stringify(e),
