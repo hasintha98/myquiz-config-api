@@ -32,7 +32,6 @@ export class IntegrationService {
 
       const createUser = {
         senderMask: userDetails.senderMask,
-        mobile: userDetails.mobile,
         serviceProvider: 'mobitel',
         cycle: 0,
       };
