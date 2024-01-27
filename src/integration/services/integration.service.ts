@@ -36,6 +36,8 @@ export class IntegrationService {
         cycle: 0,
       };
 
+      console.log("createUser", createUser)
+      
       const response = await this.userService.createUser(createUser);
 
       await this.sendQuestion({ senderMask: userDetails.senderMask });

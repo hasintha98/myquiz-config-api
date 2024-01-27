@@ -12,13 +12,14 @@ export class UserService {
 
   async createUser(data: RegiterUserRequestDTO) {
     try {
+      console.log(USER_URL)
       await axios(USER_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
         },
-        data,
+        data: {data},
       });
 
       this.logger.log('CREATE USER|' + data.senderMask, AppService.name);
