@@ -11,5 +11,5 @@ export const MSPACE_PAYMENT_URL = process.env.MSPACE_PAYMENT_URL;
 export const MSPACE_SMS_URL = process.env.MSPACE_SMS_URL;
 export const MSPACE_SMS_CLIENT_ID = process.env.MSPACE_SMS_CLIENT_ID;
 
-export const USER_URL = 'http://localhost:1337/api/players';
-export const QUESTIONS_URL = 'http://localhost:1337/api/q-pools';
+export const USER_URL = 'https://cms.mobitelquiz.com/api/players';
+export const QUESTIONS_URL = 'https://cms.mobitelquiz.com/api/q-pools';
