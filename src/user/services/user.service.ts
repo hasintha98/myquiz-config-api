@@ -32,7 +32,7 @@ export class UserService {
 
   async getUser(data: MobileDTO) {
     try {
-      const user = await axios(USER_URL + `?filters[mobile][$eq]=${data.mobile}`, {
+      const user = await axios(USER_URL + `?filters[senderMask][$eq]=${data.senderMask}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -49,9 +49,9 @@ export class UserService {
     }
   }
 
-  async updateUserAnsweredQuestions(mobile: string, questionId: number) {
+  async updateUserAnsweredQuestions(senderMask: string, questionId: number) {
     try {
-      let user = await this.getUser({ mobile });
+      let user = await this.getUser({ senderMask });
     
       //TODO: need to implement to update the answered questions in user
 

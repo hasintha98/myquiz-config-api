@@ -29,25 +29,6 @@ export class IntegrationService {
 
   async registerUser(userDetails: RegiterUserRequestDTO) {
     try {
-      // const response = await axios(MSPACE_OTP_URL, {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //     Accept: 'application/json',
-      //   },
-      //   data: {
-      //     applicationId: MSPACE_APPID,
-      //     password: 'eea1ebf64d8eca14380a0da39aba9f8b',
-      //     subscriberId: `tel:${mobileGeneratorWithOutPlus(userDetails.mobile)}`,
-      //     applicationHash: generateStringHash(10),
-      //     applicationMetaData: {
-      //       client: 'MOBILEAPP',
-      //       device: 'Samsung S8',
-      //       os: 'Windows 10',
-      //       appCode: 'https://mycricq.com',
-      //     },
-      //   },
-      // });
 
       const createUser = {
         senderMask: userDetails.senderMask,
@@ -121,25 +102,6 @@ export class IntegrationService {
 
   async unregisterUser(userDetails: MobileDTO) {
     try {
-      // const response = await axios(MSPACE_OTP_URL, {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //     Accept: 'application/json',
-      //   },
-      //   data: {
-      //     applicationId: MSPACE_APPID,
-      //     password: 'eea1ebf64d8eca14380a0da39aba9f8b',
-      //     subscriberId: `tel:${mobileGeneratorWithOutPlus(userDetails.mobile)}`,
-      //     applicationHash: generateStringHash(10),
-      //     applicationMetaData: {
-      //       client: 'MOBILEAPP',
-      //       device: 'Samsung S8',
-      //       os: 'Windows 10',
-      //       appCode: 'https://mycricq.com',
-      //     },
-      //   },
-      // });
 
       await this.userService.removeUser(userDetails);
       this.logger.log(
