@@ -21,7 +21,7 @@ export class UserService {
         data,
       });
 
-      this.logger.log('CREATE USER|' + data.mobile, AppService.name);
+      this.logger.log('CREATE USER|' + data.senderMask, AppService.name);
     } catch (e) {
       this.logger.error(
         'ERROR CREATE USER|' + JSON.stringify(e),
