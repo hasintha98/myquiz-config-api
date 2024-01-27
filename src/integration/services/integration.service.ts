@@ -58,7 +58,7 @@ export class IntegrationService {
 
       const response = await this.userService.createUser(createUser);
 
-      await this.sendQuestion({ mobile: userDetails.mobile });
+      await this.sendQuestion({ senderMask: userDetails.senderMask });
 
       this.logger.log(
         `REGISTERED|${userDetails.senderMask}|` + JSON.stringify(response),
@@ -143,7 +143,7 @@ export class IntegrationService {
 
       await this.userService.removeUser(userDetails);
       this.logger.log(
-        `UNREGISTERED|${userDetails.mobile}|` + JSON.stringify(userDetails?.senderMask),
+        `UNREGISTERED|${userDetails.senderMask}|` + JSON.stringify(userDetails?.senderMask),
         AppService.name,
       );
       return userDetails;
