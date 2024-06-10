@@ -35,8 +35,6 @@ export class IntegrationService {
         serviceProvider: 'mobitel',
         cycle: 0,
       };
-
-      console.log("createUser", createUser)
       
       const response = await this.userService.createUser(createUser);
 
@@ -84,7 +82,7 @@ export class IntegrationService {
           characterEncoding: 'ascii',
           appID: MSPACE_APPID,
           appKey: MSPACE_APPKEY,
-          recipientMask: user.attributes.senderMask,
+          receipientMask: user.attributes.senderMask,
         },
       });
 
